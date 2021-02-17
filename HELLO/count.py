@@ -1,2 +1,2 @@
-for e in range(1, 21):
-    print(e, end=",")
+for i in range(1, 21):
+    print(i, end=",")
