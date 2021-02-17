@@ -6,16 +6,10 @@ def fibosum(n):
         series.append(c)
         a, b = b, c
 
-    res = 0
-    for i in series:
-        res =+ i
-
-
-
-
-    return res
+    return series
 
 
 
 n = int(input("Enter a number for the Fibonacci sequence: " ))
-print(fibosum(n))
+print(sum(fibosum(n)))
+
