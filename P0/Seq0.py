@@ -26,3 +26,21 @@ def seq_count(seq):
     return gene_dict
 
 
+def seq_reverse(seq):
+
+    seq_inv = seq[::-1]
+
+    return seq_inv
+
+
+def seq_complement(seq):
+    seq_dicc = {"A": "T", "C": "G", "G": "C", "T": "A"}
+    complementary = ""
+    for i in range(0, len(seq)):
+        unit = seq[i]
+        complementary += seq_dicc[unit]
+
+    return complementary
+
+
+
