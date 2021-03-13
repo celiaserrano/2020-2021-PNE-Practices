@@ -109,6 +109,22 @@ class Seq:
         self.strbases = Seq.take_out_first_line(Path(filename).read_text())
 
 
+    def most_freq_base(self):
+        a, c, g, t = self.count_bases()
+        if a > c and a > g and a > t:
+            return "Most frequent Base: A"
+
+        elif c > a and c > g and c > t:
+            return "Most frequent Base: C"
+
+        elif g > a and g > c and g > t:
+            return "Most frequent Base: G"
+
+        else:
+            return "Most frequent Base: T"
+
+
+
 
 def test_sequences():
     s1 = Seq()

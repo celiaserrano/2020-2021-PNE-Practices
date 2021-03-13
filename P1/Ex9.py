@@ -8,6 +8,7 @@ def print_results(sequence):
 
 
 print("-----| Practice 1, Exercise 9 |------")
+PROJECT_PATH = "./project/"
 s1 = Seq()
-s1.read_fasta("ADA.txt")
+s1.read_fasta(PROJECT_PATH + "ADA.txt")
 print_results(s1)
