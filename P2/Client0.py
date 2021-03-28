@@ -1,4 +1,6 @@
 import socket
+from termcolor import colored
+
 class Client:
     def __init__(self, ip, port):
         self.ip = ip
@@ -23,6 +25,7 @@ class Client:
         return "Connection to SERVER at " + self.ip + ", PORT: " + str(self.port)
 
 
+
     def talk(self, msg):
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -31,10 +34,19 @@ class Client:
         s.connect((self.ip, self.port))
 
         # Send data.
+
+
         print("To Server:", msg)
+
         s.send(msg.encode())
 
         # Receive data
         response = s.recv(2048).decode("utf-8")
+
         s.close()
-        return "From server: "+ response
+        return response
+
+    def debug_talk(self, msg):
+        return "From server: " + colored(self.talk(msg), "green", )
+
+
