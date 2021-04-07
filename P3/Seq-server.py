@@ -1,5 +1,8 @@
 import socket
+import server_utils
 
+
+list_sequences = ["ACACACACGAGAGGATTATATCCTT", "GGGGGTTTTAAAAACCTTAGATCAT", "CAGATAGATATAGAGATCACAC", "AAAAATTTTTTGGGCCCCC", "TTCCCGGGGTTTGGGCCCTTTAA"]
 # Configure the Server's IP and PORT
 PORT = 8080
 IP = "127.0.0.1"
@@ -25,9 +28,6 @@ print("A client has connected to the server!")
 ls.close()
 
 while True:
-    # -- Waits for a client to connect
-    print("Waiting for Clients to connect")
-
     try:
         (cs, client_ip_port) = ls.accept()
         count_connections += 1
@@ -36,46 +36,43 @@ while True:
     # -- Server stopped manually
     except KeyboardInterrupt:
         print("Server stopped by the user")
-
-        # -- Close the listenning socket
         ls.close()
-
-        # -- Exit!
         exit()
 
     # -- Execute this part if there are no errors
-    else:
-
-        print("A client has connected to the server!")
 
         # -- Read the message from the client
         # -- The received message is in raw bytes
-        msg_raw = cs.recv(2048)
+    msg_raw = cs.recv(2048)
+    print(msg_raw)
 
         # -- We decode it for converting it
         # -- into a human-redeable string
-        msg = msg_raw.decode()
+    msg = msg_raw.decode()
+    formatted_message = server_utils.format_command(msg)
+    print(formatted_message)
+    formatted_message = formatted_message.split(" ")
+    if len(formatted_message) == 1:
+        command = formatted_message[0]
 
-        # -- Print the received message
-        print(f"Message received: {msg}")
+    else:
+        command = formatted_message[0]
+        argument = formatted_message[1]
 
-        # -- Send a response message to the client
-        try:
-            response = int(msg) ** int(msg)
-            print("Response", response )
-            # -- The message has to be encoded into bytes
-            cs.send(str(response.encode()))
+    if formatted_message == "PING":
+        server_utils.ping(cs)
 
-        except ValueError:
-            cs.send("We need a number".encode())
+    elif command == "GET":
+        server_utils.get(cs, list_sequences, argument)
 
 
+    else:
+        response = "Not avaible command"
+        cs.send(str(response.encode()))
 
+    cs.close()
 
-        # -- Close the data socket
-        cs.close()
-
-        if count_connections == 5:
-            for i in range(0, len(client_address_list)):
-                print("Client " + str(i) + ": Client IP, PORT: " + str(client_address_list[i]))
-            exit(0)
+    if count_connections == 5:
+       for i in range(0, len(client_address_list)):
+            print("Client " + str(i) + ": Client IP, PORT: " + str(client_address_list[i]))
+       exit(0)

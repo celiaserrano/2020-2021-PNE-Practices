@@ -25,9 +25,6 @@ print("A client has connected to the server!")
 ls.close()
 
 while True:
-    # -- Waits for a client to connect
-    print("Waiting for Clients to connect")
-
     try:
         (cs, client_ip_port) = ls.accept()
         count_connections += 1
@@ -36,46 +33,38 @@ while True:
     # -- Server stopped manually
     except KeyboardInterrupt:
         print("Server stopped by the user")
-
-        # -- Close the listenning socket
         ls.close()
-
-        # -- Exit!
         exit()
+    # -- Exit!
+
 
     # -- Execute this part if there are no errors
-    else:
-
-        print("A client has connected to the server!")
+    print("A client has connected to the server!")
 
         # -- Read the message from the client
         # -- The received message is in raw bytes
-        msg_raw = cs.recv(2048)
+    msg_raw = cs.recv(2048)
 
         # -- We decode it for converting it
         # -- into a human-redeable string
-        msg = msg_raw.decode()
+    msg = msg_raw.decode()
 
         # -- Print the received message
-        print(f"Message received: {msg}")
+    print(f"Message received: {msg}")
 
         # -- Send a response message to the client
-        try:
-            response = int(msg) ** int(msg)
-            print("Response", response )
-            # -- The message has to be encoded into bytes
-            cs.send(str(response.encode()))
 
-        except ValueError:
-            cs.send("We need a number".encode())
+    response = "ECHO: " + msg
+
+    cs.send(str(response.encode()))
 
 
 
 
         # -- Close the data socket
-        cs.close()
+    cs.close()
 
-        if count_connections == 5:
-            for i in range(0, len(client_address_list)):
-                print("Client " + str(i) + ": Client IP, PORT: " + str(client_address_list[i]))
-            exit(0)
+    if count_connections == 5:
+       for i in range(0, len(client_address_list)):
+            print("Client " + str(i) + ": Client IP, PORT: " + str(client_address_list[i]))
+       exit(0)
