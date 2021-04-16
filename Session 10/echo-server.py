@@ -1,7 +1,7 @@
 import socket
 
 # Configure the Server's IP and PORT
-PORT = 8080
+PORT = 20006
 IP = "192.168.1.45"
 
 # -- Step 1: create the socket

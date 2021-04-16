@@ -69,6 +69,7 @@ class Seq:
 
     def count(self):
         a, c, g, t = self.count_bases()
+
         return {"A":a, "C":c, "G":g, "T":t}
 
     def reverse(self):
@@ -122,6 +123,18 @@ class Seq:
 
         else:
             return "Most frequent Base: T"
+
+
+    def percent(self):
+        a, c, g, t = self.count_bases()
+        A_p = (a / ( c + g + t)) * 100
+        C_p = (c / ( a + g + t)) * 100
+        G_p = (g / ( a + c + t)) * 100
+        T_p = ( t / ( a + c + g)) * 100
+        result = "\nA: " + str(a) + "(" + str(round(A_p, 2)) + "%)" + "\nC: " + str(c) + "(" + str(round(C_p, 2)) + "%)" + "\nG: " + str(g) + "(" + str(round(G_p, 2))  + "%)" + "\nT: " + str(t) + "(" + str(round(T_p, 2)) + "%)"
+        return result
+
+
 
 
 
