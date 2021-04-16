@@ -23,7 +23,7 @@ def get(cs, list_sequences, argument):
     cs.send(response.encode())
 
 
-def info(cs, argument): #AÑADIR PORCENTAJES
+def info(cs, argument):
     print_colored("INFO", "yellow")
     seq1 = Seq(argument)
 
