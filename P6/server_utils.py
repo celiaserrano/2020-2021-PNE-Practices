@@ -30,54 +30,48 @@ def get(list_sequences, seq_number):
     return contents
 
 
-def info(cs, argument):
-    print_colored("INFO", "yellow")
-    seq1 = Seq(argument)
+def info(sequence):
+    seq1 = Seq(sequence)
 
-    response = "Sequence: " + str(argument) + "\nTotal lenght: " + str(seq1.len()) + seq1.percent()
-    print(response)
-    cs.send(response.encode())
+    response = "\nTotal lenght: " + str(seq1.len()) + seq1.percent()
+    context = {
+        "sequence": sequence,
+        "calculation": response
+    }
+    contents = read_template_html_file("./html/option.html").render(context=context)
+    return contents
 
 
-def comp(cs, argument):
-    print_colored("COMP", "yellow")
-    seq1 = Seq(argument)
-    response = str(seq1.complement())
-    print(response)
-    cs.send(response.encode())
+def comp(sequence):
+    seq1 = Seq(sequence)
 
-def rev(cs, argument):
-    print_colored("REV", "yellow")
-    seq1 = Seq(argument)
-    response = str(seq1.reverse())
-    print(response)
-    cs.send(response.encode())
+    context = {
+        "sequence": sequence,
+        "calculation": seq1.complement()
+    }
+    contents = read_template_html_file("./html/option.html").render(context=context)
+    return contents
+
+def rev(sequence):
+    seq1 = Seq(sequence)
+    context = {
+        "sequence": sequence,
+        "calculation": seq1.reverse()
+    }
+    contents = read_template_html_file("./html/option.html").render(context=context)
+    return contents
 
 
 def gene(seq_name):
-    PATH = "./Sequences/" + seq_name + '.txt'
+    PATH = "./sequences/" + seq_name + '.txt'
     s1 = Seq()
     s1.read_fasta(PATH)
     context = {
         "gene_name": seq_name,
-        "gene_contents": s1.str_bases
+        "calculation": s1.strbases
     }
     contents = read_template_html_file("./html/gene.html").render(context=context)
     return contents
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

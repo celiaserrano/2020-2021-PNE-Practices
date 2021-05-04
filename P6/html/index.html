@@ -16,21 +16,21 @@
     <form action="get" method="get">
       Get a sequence. Select sequence number:
       <select name="sequence">
-        {% for n in range(0,{{context.n_sequences}}) %}
+        {% for n in range(0, context.n_sequences) %}
           <option value="{{n}}">{{n}}</option>
         {% endfor %}
       </select>
-      <input type="sumit" value="GET">
+      <input type="submit" value="GET">
     </form>
    <hr>
     <form action="gene" method="get">
       Get a gene. Select the name:
       <select name="gene">
-        {% for n in context.list_genes %}
+      {% for n in context.list_genes %}
           <option value="{{n}}">{{n}}</option>
-        {% endfor %}
+      {% endfor %}
       </select>
-      <input type="sumit" value="GENE">
+      <input type="submit" value="GENE">
     </form>
    <hr>
       <form action="operation" method="get">
@@ -38,8 +38,8 @@
         <br>
       Select operation:
            <input type="radio" name="calculation" value="Info"> Info
-        <input type="radio" name="calculation" value="Info"> Comp
-        <input type="radio" name="calculation" value="Info"> Rev
+        <input type="radio" name="calculation" value="Comp"> Comp
+        <input type="radio" name="calculation" value="Rev"> Rev
         <br>
       <input type="submit" value="OPERATE">
       </form>

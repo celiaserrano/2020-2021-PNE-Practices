@@ -86,13 +86,23 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             number_sequence = arguments["sequence"][0]
             contents = su.get(LIST_SEQUENCES, number_sequence)
 
-        elif path_name == "/operation":
-            sequence = arguments["sequence"][0]
-            operation = arguments["calculation"][0]
-
         elif path_name == "/gene":
             gene = arguments["gene"][0]
             contents = su.gene(gene)
+
+        elif path_name == "/operation":
+            sequence = arguments["sequence"][0]
+            operation = arguments["calculation"][0]
+            if operation == 'Comp':
+                contents = su.comp(sequence)
+
+            elif operation == 'Rev':
+                contents = su.rev(sequence)
+
+            elif operation == 'Info':
+                contents = su.info(sequence)
+
+
 
         else:
             contents = su.read_template_html_file("./html/error.html").render()
