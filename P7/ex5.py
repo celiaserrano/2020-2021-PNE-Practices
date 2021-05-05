@@ -4,7 +4,8 @@ import Seq1
 
 def print_color(message, color):
     from termcolor import cprint, colored
-    print(colored(message, color))
+    print(colored(message, color), end="")
+
 
 DICT_GENES = {
        "FRAT1": "ENSG00000165879",
@@ -36,10 +37,10 @@ try:
             s_lenght = sequence.len()
             percents = sequence.percent()
             freq_base = sequence.most_freq_base()
-            print_color("Gene: " , key, "yellow")
-            print_color("Total lenght: ", s_lenght, "yellow")
+            print_color("Gene: " + str(key), "yellow")
+            print_color("\nTotal lenght: " + str(s_lenght), "yellow")
             print_color(percents, "blue")
-            print_color(freq_base,"yellow")
+            print_color(freq_base, "yellow")
 
 
 except KeyError:
