@@ -4,8 +4,6 @@ import termcolor
 
 from urllib.parse import urlparse, parse_qs
 import functions as fu
-import funct_kary as fu_2
-import funct_lenght as fu_3
 import funct_gene
 
 PORT = 8080
@@ -50,12 +48,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         elif path_name == "/karyotype":
             specie = arguments["specie"][0]
-            contents = fu_2.print_karyotype(specie)
+            contents = fu.print_karyotype(specie)
 
         elif path_name == "/chromosomeLength":
             specie = arguments["specie"][0]
             chromo = arguments["chromo"][0]
-            contents = fu_3.print_lenght(specie, chromo)
+            contents = fu.print_lenght(specie, chromo)
 
         elif path_name == "/geneSeq":
             gene = arguments["gene"][0]
@@ -90,19 +88,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         return
 
 
-# ------------------------
-# - Server MAIN program
-# ------------------------
-# -- Set the new handler
 Handler = TestHandler
 
-# -- Open the socket server
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
 
     print("Serving at PORT", PORT)
 
-    # -- Main loop: Attend the client. Whenever there is a new
-    # -- clint, the handler is called
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

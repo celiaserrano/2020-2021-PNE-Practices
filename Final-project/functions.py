@@ -1,4 +1,3 @@
-
 import pathlib
 from jinja2 import Template
 import http.client
@@ -7,24 +6,10 @@ import json
 
 
 SERVER = "rest.ensembl.org"
-ENDPOINT = "/info/species"
-PARAMS = "?content-type=application/json"
 
 
-connection = http.client.HTTPConnection(SERVER)
-
-connection.request("GET", ENDPOINT + PARAMS)
-response = connection.getresponse()
-answer_decoded = response.read().decode()
-print(type(answer_decoded), answer_decoded)
-dict_response = json.loads(answer_decoded)
-print(type(dict_response), dict_response)
-dict_species = dict_response["species"]
 
 
-def format_command(command):
-    command2 = command.replace("\n", "").replace("\r", "")
-    return command2.replace("\n", "").replace("\r", "")
 
 def read_template_html_file(filename):
     content = Template(pathlib.Path(filename).read_text())
@@ -33,6 +18,20 @@ def read_template_html_file(filename):
 
 
 def limit_species(limit=None):
+    ENDPOINT = "/info/species"
+    PARAMS = "?content-type=application/json"
+
+    connection = http.client.HTTPConnection(SERVER)
+
+    connection.request("GET", ENDPOINT + PARAMS)
+    response = connection.getresponse()
+    answer_decoded = response.read().decode()
+    print(type(answer_decoded), answer_decoded)
+    dict_response = json.loads(answer_decoded)
+    print(type(dict_response), dict_response)
+
+
+
     dict_species = dict_response["species"]
     n_species = len(dict_species)
 
@@ -44,7 +43,52 @@ def limit_species(limit=None):
     contents = read_template_html_file("./html/species.html").render(context=context)
     return contents
 
+def print_karyotype(specie):
+    ENDPOINT = "/info/assembly/"
+    PARAMS = "?content-type=application/json"
+    PARAMS_DEF = specie + PARAMS
 
+    connection = http.client.HTTPConnection(SERVER)
+
+    connection.request("GET", ENDPOINT + PARAMS_DEF)
+    response = connection.getresponse()
+    answer_decoded = response.read().decode()
+    print(type(answer_decoded), answer_decoded)
+    dict_response = json.loads(answer_decoded)
+    print(type(dict_response), dict_response)
+
+    dict_karyotype = dict_response["karyotype"]
+
+
+    context = {
+            "karyotype": dict_karyotype
+            }
+    contents = read_template_html_file("./html/karyotype.html").render(context=context)
+    return contents
+
+def print_lenght(specie, chromo):
+    ENDPOINT = "info/assembly/"
+    PARAMS = "?content-type=application/json"
+    PARAMS_DEF = specie + PARAMS
+
+    connection = http.client.HTTPConnection(SERVER)
+
+    connection.request("GET", ENDPOINT + PARAMS_DEF)
+    response = connection.getresponse()
+    answer_decoded = response.read().decode()
+    print(type(answer_decoded), answer_decoded)
+    dict_response = json.loads(answer_decoded)
+
+    new_list = dict_response["top_level_region"]
+    for elem in new_list:
+        if elem["name"] == chromo:
+            chromo_lenght = elem["length"]
+
+    context = {
+            "lenght": chromo_lenght
+            }
+    contents = read_template_html_file("./html/lenght.html").render(context=context)
+    return contents
 
 
 
