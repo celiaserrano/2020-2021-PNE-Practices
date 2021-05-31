@@ -6,39 +6,10 @@ from urllib.parse import urlparse, parse_qs
 import functions as fu
 import funct_kary as fu_2
 import funct_lenght as fu_3
+import funct_gene
 
 # Define the Server's port
 PORT = 8080
-LIST_SEQUENCES = ["ACACACACGAGAGGATTATATCCTT", "GGGGGTTTTAAAAACCTTAGATCAT", "CAGATAGATATAGAGATCACAC", "AAAAATTTTTTGGGCCCCC", "TTCCCGGGGTTTGGGCCCTTTAA"]
-LIST_GENES = ["ADA", "FRAT1", "FNX", "RNU6_269P", "U5"]
-
-BASES_INFORMATION = {
-    "A": {"link": "https://en.wikipedia.org/wiki/Adenine",
-          "formula": "C5H5N5",
-          "name": "ADENINE",
-          "colour" : "green"
-          },
-    "C": {"link": "https://en.wikipedia.org/wiki/Cytosine",
-          "formula": "C4H5N3O",
-          "name": "CYTOSINE",
-          "colour": "yellow"
-          },
-    "G": {"link": "https://en.wikipedia.org/wiki/Guanine",
-          "formula": "C5H5N5O",
-          "name": "GUANINE",
-          "colour": "lightskyblue"
-          },
-
-    "T": {"link": "https://en.wikipedia.org/wiki/Thymine",
-          "formula": "C5H6N2O2",
-          "name": "THYMINE",
-          "colour" : "pink"
-          }
-}
-
-
-
-
 
 
 # -- This is for preventing the error: "Port already in use"
@@ -100,6 +71,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             species_2 = arguments["specie"][0]
             chromos = arguments["chromo"][0]
             contents = fu_3.print_lenght(species_2, chromos)
+
+        elif path_name == "/geneSeq":
+            genes = arguments["gene"][0]
+            contents = funct_gene.open_seq(genes)
+
+        elif path_name == "/geneInfo":
+            contents = funct_gene.open_seq()
+
+        elif path_name == "/geneCalc":
+            contents = funct_gene.open_seq()
+
 
         else:
             contents = fu.read_template_html_file("./html/error.html").render()
