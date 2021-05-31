@@ -114,16 +114,16 @@ class Seq:
     def most_freq_base(self):
         a, c, g, t = self.count_bases()
         if a > c and a > g and a > t:
-            return "\nMost frequent Base: A"
+            return "\nThe most frequent base is: A"
 
         elif c > a and c > g and c > t:
-            return "\nMost frequent Base: C"
+            return "\nThe most frequent base is: C"
 
         elif g > a and g > c and g > t:
-            return "\nMost frequent Base: G"
+            return "\nThe most frequent base is: G"
 
         else:
-            return "\nMost frequent Base: T"
+            return "\nThe most frequent base is: T"
 
 
     def percent(self):
@@ -134,9 +134,6 @@ class Seq:
         T_p = ( t / ( a + c + g)) * 100
         result = "\nA: " + str(a) + " (" + str(round(A_p, 2)) + "%)" + "\nC: " + str(c) + " (" + str(round(C_p, 2)) + "%)" + "\nG: " + str(g) + " (" + str(round(G_p, 2))  + "%)" + "\nT: " + str(t) + " (" + str(round(T_p, 2)) + "%)"
         return result
-
-
-
 
 
 

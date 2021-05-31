@@ -8,18 +8,10 @@ import funct_kary as fu_2
 import funct_lenght as fu_3
 import funct_gene
 
-# Define the Server's port
 PORT = 8080
 
-
-# -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
 
-
-
-
-# Class with our Handler. It is a called derived from BaseHTTPRequestHandler
-# It means that our class inheritates all his methods and properties
 class TestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -36,13 +28,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         print("Resource requested: ", path_name)
         print("Parameters:", arguments)
 
-
-        # IN this simple server version:
-        # We are NOT processing the client's request
-        # It is a happy server: It always returns a message saying
-        # that everything is ok
-
-        # Message to send back to the client
 
         error = False
         context = {}
@@ -64,34 +49,31 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
 
         elif path_name == "/karyotype":
-            species = arguments["specie"][0]
-            contents = fu_2.print_karyotype(species)
+            specie = arguments["specie"][0]
+            contents = fu_2.print_karyotype(specie)
 
         elif path_name == "/chromosomeLength":
-            species_2 = arguments["specie"][0]
-            chromos = arguments["chromo"][0]
-            contents = fu_3.print_lenght(species_2, chromos)
+            specie = arguments["specie"][0]
+            chromo = arguments["chromo"][0]
+            contents = fu_3.print_lenght(specie, chromo)
 
         elif path_name == "/geneSeq":
-            genes = arguments["gene"][0]
-            contents = funct_gene.open_seq(genes)
+            gene = arguments["gene"][0]
+            contents = funct_gene.open_seq(gene)
 
         elif path_name == "/geneInfo":
-            contents = funct_gene.open_seq()
+            gene = arguments["gene"][0]
+            contents = funct_gene.info_seq(gene)
 
         elif path_name == "/geneCalc":
-            contents = funct_gene.open_seq()
+            gene = arguments["gene"][0]
+            contents = funct_gene.calc_seq(gene)
 
 
         else:
             contents = fu.read_template_html_file("./html/error.html").render()
 
 
-
-
-
-
-        # Generating the response message
         self.send_response(200)
 
         # Define the content-type header:
