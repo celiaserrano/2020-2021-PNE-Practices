@@ -1,0 +1,34 @@
+Test report example
+====================
+
+---> listSpecies endpoint
+
+* TEST 1:
+
+* Input:
+
+http://127.0.0.1:8080/listSpecies?limit=2
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LIST OF SPECIES IN THE BROWSER</title>
+</head>
+<body style="background-color: lightblue;">
+<body>
+   The total number of species in the ensembl is : 267 <br>
+   The limit you have selected is : 2 <br>
+   The names of the species are : <ul><li>Burton's mouthbrooder</li><li>Agassiz's desert tortoise</li>
+</body>
+</html>
+
+...
+...
+Many more test here!
+...
+...
+
+body style="background-color: red;">

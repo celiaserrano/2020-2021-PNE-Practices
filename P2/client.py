@@ -12,7 +12,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((IP, PORT))
 
 # Send data. No strings can be send, only bytes
-# It necesary to encode the string into bytes
+# It is necessary to encode the string into bytes
 s.send(str.encode("HELLO FROM THE CLIENT!!!"))
 
 # Receive data from the server
