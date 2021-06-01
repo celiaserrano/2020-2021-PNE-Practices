@@ -76,6 +76,7 @@ def print_karyotype(specie):
             contents = read_template_html_file("./html/error.html").render()
             return contents
 
+
     except ConnectionRefusedError:
         print("ERROR!!! Cannot connect to the server")
         exit()
@@ -99,19 +100,21 @@ def print_lenght(specie, chromo):
             dict_response = json.loads(answer_decoded)
 
             new_list = dict_response["top_level_region"]
+            chromo_lenght = 0
+
             for elem in new_list:
                 if elem["name"] == chromo:
                     chromo_lenght = elem["length"]
-                    context = {
-                        "lenght": chromo_lenght
-                    }
-                    contents = read_template_html_file("./html/lenght.html").render(context=context)
-                    return contents
+                    break
 
 
-                else:
-                    contents = read_template_html_file("./html/error.html").render()
-                    return contents
+            context = {
+                     "lenght": chromo_lenght
+            }
+
+            contents = read_template_html_file("./html/lenght.html").render(context=context)
+            return contents
+
 
         else:
             contents = read_template_html_file("./html/error.html").render()

@@ -360,7 +360,7 @@ http://localhost:8080/karyotype?specie=homo+sapiens
 
 * Input:
 
-http://localhost:8080/chromosomeLength?specie=human&chromo=18
+http://localhost:8080/chromosomeLength?specie=mouse&chromo=18
 
 * output:
 
