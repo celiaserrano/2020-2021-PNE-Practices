@@ -1,34 +1,445 @@
-Test report example
-====================
-
 ---> listSpecies endpoint
 
 * TEST 1:
 
 * Input:
 
-http://127.0.0.1:8080/listSpecies?limit=2
+http://localhost:8080/listSpecies?limit=2
+
+* output:
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  <body>
+  <body style="background-color: skyblue;">
+
+    <p>The total number of species in the ensembl is: 310</p>
+    <p>The limit you have selected is: 2</p>
+    The name of the species are:<br/>
+        <br>
+
+    <p>Little spotted kiwi </p>
+
+    <p>Indian glassy fish </p>
+
+    <a href="/">Main page</a>
+  </body>
+</html>
+
+* TEST 2:
+
+* Input:
+
+http://localhost:8080/listSpecies?limit=
 
 * output:
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LIST OF SPECIES IN THE BROWSER</title>
-</head>
-<body style="background-color: lightblue;">
-<body>
-   The total number of species in the ensembl is : 267 <br>
-   The limit you have selected is : 2 <br>
-   The names of the species are : <ul><li>Burton's mouthbrooder</li><li>Agassiz's desert tortoise</li>
-</body>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  <body>
+  <body style="background-color: skyblue;">
+
+    <p>The total number of species in the ensembl is: 310</p>
+    <p>The limit you have selected is: None</p>
+    The name of the species are:<br/>
+        <br>
+
+    <p>Little spotted kiwi </p>
+
+    <p>Indian glassy fish </p>
+
+    <p>Blue tit </p>
+
+    <p>Narwhal </p>
+
+    <p>American beaver </p>
+
+    <p>Lumpfish </p>
+
+    <p>Chinese hamster CHOK1GS </p>
+
+    <p>Channel bull blenny </p>
+
+    <p>Golden Hamster </p>
+
+    <p>Wild yak </p>
+
+    <p>Siamese fighting fish </p>
+
+    <p>Eastern happy </p>
+
+    <p>Hyrax </p>
+    ...
+
+    #it prints the 310 species (all of them)
+
+    <a href="/">Main page</a>
+  </body>
 </html>
 
-...
-...
-Many more test here!
-...
-...
 
-body style="background-color: red;">
+* TEST 3:
+
+* Input:
+
+http://localhost:8080/listSpecies?limit=600
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  <body>
+  <body style="background-color: skyblue;">
+
+    <p>The total number of species in the ensembl is: 310</p>
+    <p>The limit you have selected is: 600</p>
+    The name of the species are:<br/>
+        <br>
+
+    <p>Little spotted kiwi </p>
+
+    <p>Indian glassy fish </p>
+
+    <p>Blue tit </p>
+
+    <p>Narwhal </p>
+
+    <p>American beaver </p>
+
+    <p>Lumpfish </p>
+
+    <p>Chinese hamster CHOK1GS </p>
+
+    <p>Channel bull blenny </p>
+
+    <p>Golden Hamster </p>
+
+    <p>Wild yak </p>
+
+    <p>Siamese fighting fish </p>
+
+    <p>Eastern happy </p>
+
+    <p>Hyrax </p>
+
+    #it prints the 310 species (all of them)
+
+    <a href="/">Main page</a>
+  </body>
+</html>
+
+
+* TEST 4:
+
+* Input:
+
+http://localhost:8080/listSpecies?limit=hvhg      #random letters
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bases server</title>
+  </head>
+  <body style="background-color: red;">
+    <h1>ERROR</h1>
+    <p>Welcome to the DATA ERROR server</p>
+    <p>If you are here it is because the data you have entered does not exist in the ensembl</p>
+    <p>Sorry!!!</p>
+    <p><a href="/">Main page</a></p>
+  </body>
+</html>
+
+---> karyotype endpoint
+
+* TEST 1:
+
+* Input:
+
+http://localhost:8080/karyotype?specie=human
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  <body>
+  <body style="background-color: skyblue;">
+    The names of the chromosomes are:<br/>
+        <br>
+
+    <p> 1</p>
+
+    <p> 2</p>
+
+    <p> 3</p>
+
+    <p> 4</p>
+
+    <p> 5</p>
+
+    <p> 6</p>
+
+    <p> 7</p>
+
+    <p> 8</p>
+
+    <p> 9</p>
+
+    <p> 10</p>
+
+    <p> 11</p>
+
+    <p> 12</p>
+
+    <p> 13</p>
+
+    <p> 14</p>
+
+    <p> 15</p>
+
+    <p> 16</p>
+
+    <p> 17</p>
+
+    <p> 18</p>
+
+    <p> 19</p>
+
+    <p> 20</p>
+
+    <p> 21</p>
+
+    <p> 22</p>
+
+    <p> X</p>
+
+    <p> Y</p>
+
+    <p> MT</p>
+
+    <a href="/">Main page</a>
+  </body>
+</html>
+
+
+
+* TEST 2:
+
+* Input:
+
+http://localhost:8080/karyotype?specie=
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bases server</title>
+  </head>
+  <body style="background-color: red;">
+    <h1>ERROR</h1>
+    <p>Welcome to the DATA ERROR server</p>
+    <p>If you are here it is because you have not entered any data</p>
+    <p>Sorry, try again!!!</p>
+    <p><a href="/">Main page</a></p>
+  </body>
+</html>
+
+
+* TEST 3:
+
+* Input:
+
+http://localhost:8080/karyotype?specie=hvhg #random letters
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bases server</title>
+  </head>
+  <body style="background-color: red;">
+    <h1>ERROR</h1>
+    <p>Welcome to the DATA ERROR server</p>
+    <p>If you are here it is because the data you have entered does not exist in the ensembl</p>
+    <p>Sorry!!!</p>
+    <p><a href="/">Main page</a></p>
+  </body>
+</html>
+
+* TEST 4:
+
+* Input:
+
+http://localhost:8080/karyotype?specie=homo+sapiens
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  <body>
+  <body style="background-color: skyblue;">
+    The names of the chromosomes are:<br/>
+        <br>
+
+    <p> 1</p>
+
+    <p> 2</p>
+
+    <p> 3</p>
+
+    <p> 4</p>
+
+    <p> 5</p>
+
+    <p> 6</p>
+
+    <p> 7</p>
+
+    <p> 8</p>
+
+    <p> 9</p>
+
+    <p> 10</p>
+
+    <p> 11</p>
+
+    <p> 12</p>
+
+    <p> 13</p>
+
+    <p> 14</p>
+
+    <p> 15</p>
+
+    <p> 16</p>
+
+    <p> 17</p>
+
+    <p> 18</p>
+
+    <p> 19</p>
+
+    <p> 20</p>
+
+    <p> 21</p>
+
+    <p> 22</p>
+
+    <p> X</p>
+
+    <p> Y</p>
+
+    <p> MT</p>
+
+    <a href="/">Main page</a>
+  </body>
+</html>
+
+
+
+---> chromosomeLength endpoint
+
+* TEST 1:
+
+* Input:
+
+http://localhost:8080/chromosomeLength?specie=human&chromo=18
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  <body>
+  <body style="background-color: skyblue;">
+    The lenght of the chromosome is: 90720763<br/>
+        <br>
+    <a href="/">Main page</a>
+  </body>
+</html>
+
+* TEST 2:
+
+* Input:
+
+http://localhost:8080/chromosomeLength?specie=&chromo=18
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bases server</title>
+  </head>
+  <body style="background-color: red;">
+    <h1>ERROR</h1>
+    <p>Welcome to the DATA ERROR server</p>
+    <p>If you are here it is because you have not entered any data</p>
+    <p>Sorry, try again!!!</p>
+    <p><a href="/">Main page</a></p>
+  </body>
+</html>
+
+* TEST 3:
+
+* Input:
+
+http://localhost:8080/chromosomeLength?specie=hello+and+bye&chromo=18
+
+* output:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bases server</title>
+  </head>
+  <body style="background-color: red;">
+    <h1>ERROR</h1>
+    <p>Welcome to the DATA ERROR server</p>
+    <p>If you are here it is because the data you have entered does not exist in the ensembl</p>
+    <p>Sorry!!!</p>
+    <p><a href="/">Main page</a></p>
+  </body>
+</html>
+
+* TEST 4:
+
+* Input:
+
+http://localhost:8080/chromosomeLength?specie=&chromo=67
+
+* output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bases server</title>
+  </head>
+  <body style="background-color: red;">
+    <h1>ERROR</h1>
+    <p>Welcome to the DATA ERROR server</p>
+    <p>If you are here it is because you have not entered any data</p>
+    <p>Sorry, try again!!!</p>
+    <p><a href="/">Main page</a></p>
+  </body>
+</html>

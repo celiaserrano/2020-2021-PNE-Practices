@@ -67,13 +67,14 @@ def print_karyotype(specie):
             dict_karyotype = dict_response["karyotype"]
 
             context = {
-             "karyotype": dict_karyotype
+                "karyotype": dict_karyotype
             }
             contents = read_template_html_file("./html/karyotype.html").render(context=context)
             return contents
 
         else:
-            print("ERROR!!! Cannot connect to the server")
+            contents = read_template_html_file("./html/error.html").render()
+            return contents
 
     except ConnectionRefusedError:
         print("ERROR!!! Cannot connect to the server")
@@ -101,23 +102,23 @@ def print_lenght(specie, chromo):
             for elem in new_list:
                 if elem["name"] == chromo:
                     chromo_lenght = elem["length"]
+                    context = {
+                        "lenght": chromo_lenght
+                    }
+                    contents = read_template_html_file("./html/lenght.html").render(context=context)
+                    return contents
 
-            context = {
-                "lenght": chromo_lenght
-            }
-            contents = read_template_html_file("./html/lenght.html").render(context=context)
-            return contents
+
+                else:
+                    contents = read_template_html_file("./html/error.html").render()
+                    return contents
 
         else:
-            print("ERROR!!! Cannot connect to the server")
+            contents = read_template_html_file("./html/error.html").render()
+            return contents
 
 
     except ConnectionRefusedError:
         print("ERROR!!! Cannot connect to the server")
         exit()
-
-
-
-
-
 

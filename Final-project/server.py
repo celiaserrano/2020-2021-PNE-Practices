@@ -40,8 +40,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 try:
                     limits = int(arguments["limit"][0])
                     contents = fu.limit_species(limits)
+
                 except (KeyError, ValueError):
                     contents = fu.read_template_html_file("./html/error.html").render()
+
+
             else:
                 contents = fu.read_template_html_file("./html/error.html").render()
 
@@ -52,30 +55,31 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             elif len(arguments) == 1:
                 try:
-                    specie = arguments["specie"][0]
+                    specie = arguments["specie"][0].replace(" ","_")
                     contents = fu.print_karyotype(specie)
 
                 except (KeyError, ValueError):
                     contents = fu.read_template_html_file("./html/error.html").render()
 
             else:
+
                 contents = fu.read_template_html_file("./html/error.html").render()
 
         elif path_name == "/chromosomeLength":
-            if len(arguments) == 0:
+            if len(arguments) == 0 or len(arguments) == 1:
                 contents = fu.read_template_html_file("./html/error_empty.html").render()
 
-            elif len(arguments) == 1:
+            elif len(arguments) == 2:
                 try:
-                    specie = arguments["specie"][0]
+                    specie = arguments["specie"][0].replace(" ","_")
                     chromo = arguments["chromo"][0]
                     contents = fu.print_lenght(specie, chromo)
 
                 except (KeyError, ValueError):
                     contents = fu.read_template_html_file("./html/error.html").render()
+
             else:
                 contents = fu.read_template_html_file("./html/error.html").render()
-
 
 
         elif path_name == "/geneSeq":
@@ -119,11 +123,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         self.send_response(200)
 
-        # Define the content-type header:
-        self.send_header('Content-Type', 'text/html')
+
+        self.send_header('Content-Type', 'text/plain')
         self.send_header('Content-Length', len(contents.encode()))
 
-        # The header is finished
+
         self.end_headers()
 
         # Send the response message
