@@ -27,7 +27,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         print("Parameters:", arguments)
 
 
-        error = False
+
         context = {}
         if path_name == "/":
 
@@ -41,31 +41,76 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     limits = int(arguments["limit"][0])
                     contents = fu.limit_species(limits)
                 except (KeyError, ValueError):
-                    error = True
+                    contents = fu.read_template_html_file("./html/error.html").render()
             else:
-                error = True
+                contents = fu.read_template_html_file("./html/error.html").render()
 
 
         elif path_name == "/karyotype":
-            specie = arguments["specie"][0]
-            contents = fu.print_karyotype(specie)
+            if len(arguments) == 0:
+                contents = fu.read_template_html_file("./html/error_empty.html").render()
+
+            elif len(arguments) == 1:
+                try:
+                    specie = arguments["specie"][0]
+                    contents = fu.print_karyotype(specie)
+
+                except (KeyError, ValueError):
+                    contents = fu.read_template_html_file("./html/error.html").render()
+
+            else:
+                contents = fu.read_template_html_file("./html/error.html").render()
 
         elif path_name == "/chromosomeLength":
-            specie = arguments["specie"][0]
-            chromo = arguments["chromo"][0]
-            contents = fu.print_lenght(specie, chromo)
+            if len(arguments) == 0:
+                contents = fu.read_template_html_file("./html/error_empty.html").render()
+
+            elif len(arguments) == 1:
+                try:
+                    specie = arguments["specie"][0]
+                    chromo = arguments["chromo"][0]
+                    contents = fu.print_lenght(specie, chromo)
+
+                except (KeyError, ValueError):
+                    contents = fu.read_template_html_file("./html/error.html").render()
+            else:
+                contents = fu.read_template_html_file("./html/error.html").render()
+
+
 
         elif path_name == "/geneSeq":
-            gene = arguments["gene"][0]
-            contents = funct_gene.open_seq(gene)
+            if len(arguments) == 0:
+                contents = fu.read_template_html_file("./html/error_empty.html").render()
+
+            elif len(arguments) == 1:
+               gene = arguments["gene"][0]
+               contents = funct_gene.open_seq(gene)
+
+            else:
+                contents = fu.read_template_html_file("./html/error.html").render()
+
 
         elif path_name == "/geneInfo":
-            gene = arguments["gene"][0]
-            contents = funct_gene.info_seq(gene)
+            if len(arguments) == 0:
+                contents = fu.read_template_html_file("./html/error_empty.html").render()
+
+            elif len(arguments) == 1:
+                gene = arguments["gene"][0]
+                contents = funct_gene.info_seq(gene)
+
+            else:
+                contents = fu.read_template_html_file("./html/error.html").render()
 
         elif path_name == "/geneCalc":
-            gene = arguments["gene"][0]
-            contents = funct_gene.calc_seq(gene)
+            if len(arguments) == 0:
+                contents = fu.read_template_html_file("./html/error_empty.html").render()
+
+            elif len(arguments) == 1:
+                gene = arguments["gene"][0]
+                contents = funct_gene.calc_seq(gene)
+
+            else:
+                contents = fu.read_template_html_file("./html/error.html").render()
 
 
         else:
@@ -100,3 +145,5 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
         print("")
         print("Stopped by the user")
         httpd.server_close()
+
+

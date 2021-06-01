@@ -22,16 +22,6 @@ SERVER = "rest.ensembl.org"
 ENDPOINT = "/sequence/id/"
 
 
-def hola():
-        context = {
-            "name": gene,
-            "sequence": sequence
-        }
-        contents = read_template_html_file("./html/.html").render(context=context)
-        return contents
-def format_command(command):
-    command2 = command.replace("\n", "").replace("\r", "")
-    return command2.replace("\n", "").replace("\r", "")
 
 def read_template_html_file(filename):
     content = Template(pathlib.Path(filename).read_text())
@@ -49,22 +39,27 @@ def open_seq(gene):
         connection.request("GET", ENDPOINT + ID + PARAMS)
 
         response = connection.getresponse()
-        answer_decoded = response.read().decode()
+        if response.status == 200:
+            answer_decoded = response.read().decode()
 
-        dict_response = json.loads(answer_decoded)
-        sequence = Seq1.Seq(dict_response["seq"])
+            dict_response = json.loads(answer_decoded)
+            sequence = Seq1.Seq(dict_response["seq"])
 
-        context = {
-            "gene_name": gene,
-            "gene_content": sequence
-        }
-        contents = read_template_html_file("./html/sequence.html").render(context=context)
+            context = {
+                "gene_name": gene,
+                "gene_content": sequence
+            }
+            contents = read_template_html_file("./html/sequence.html").render(context=context)
+            return contents
+
+        else:
+            print("ERROR!!! Cannot connect to the server")
+
+    except KeyError:
+        contents = read_template_html_file("./html/error_gene.html").render()
         return contents
 
 
-
-    except KeyError:
-        print("The gene is not inside our dictionary,. Choose one of the following:", list(DICT_GENES.keys()))
 
 
 def info_seq(gene):
@@ -76,35 +71,40 @@ def info_seq(gene):
         connection.request("GET", ENDPOINT + ID + PARAMS)
 
         response = connection.getresponse()
-        answer_decoded = response.read().decode()
+        if response.status == 200:
+            answer_decoded = response.read().decode()
 
-        dict_response = json.loads(answer_decoded)
-        sequence = Seq1.Seq(dict_response["seq"])
+            dict_response = json.loads(answer_decoded)
+            sequence = Seq1.Seq(dict_response["seq"])
 
-        new_dict = dict_response["desc"]
-        new_dict2 = new_dict.split(":")
-        new_list = list(new_dict2)
+            new_dict = dict_response["desc"]
+            new_dict2 = new_dict.split(":")
+            new_list = list(new_dict2)
 
-        name = new_list[2]
-        sequence_start = new_list[3]
-        sequence_end = new_list[4]
-        sequence_lenght = sequence.len()
+            name = new_list[2]
+            sequence_start = new_list[3]
+            sequence_end = new_list[4]
+            sequence_lenght = sequence.len()
+            context = {
+                "gene": gene,
+                "gene_name": name,
+                "starting": sequence_start,
+                "ending": sequence_end,
+                "lenght": sequence_lenght,
+                "gene_id": ID
+            }
+            contents = read_template_html_file("./html/information.html").render(context=context)
+            return contents
 
+        else:
+            print("ERROR!!! Cannot connect to the server")
 
-
-        context = {
-            "gene": gene,
-            "gene_name": name,
-            "starting": sequence_start,
-            "ending": sequence_end,
-            "lenght": sequence_lenght,
-            "gene_id": ID
-        }
-        contents = read_template_html_file("./html/information.html").render(context=context)
-        return contents
 
     except KeyError:
-        print("The gene is not inside our dictionary,. Choose one of the following:", list(DICT_GENES.keys()))
+        contents = read_template_html_file("./html/error_gene.html").render()
+        return contents
+
+
 
 
 def calc_seq(gene):
@@ -116,27 +116,33 @@ def calc_seq(gene):
         connection.request("GET", ENDPOINT + ID + PARAMS)
 
         response = connection.getresponse()
-        answer_decoded = response.read().decode()
+        if response.status == 200:
+            answer_decoded = response.read().decode()
 
-        dict_response = json.loads(answer_decoded)
-        sequence = Seq1.Seq(dict_response["seq"])
+            dict_response = json.loads(answer_decoded)
+            sequence = Seq1.Seq(dict_response["seq"])
 
-        n_bases = sequence.count()
-        percentage = sequence.percent()
-        sequence_lenght = sequence.len()
-        most_base = sequence.most_freq_base()
+            n_bases = sequence.count()
+            percentage = sequence.percent()
+            sequence_lenght = sequence.len()
+            most_base = sequence.most_freq_base()
 
+            context = {
+                "gene_name": gene,
+                "number_bases": n_bases,
+                "percent": percentage,
+                "lenght": sequence_lenght,
+                "freq_base": most_base
+            }
+            contents = read_template_html_file("./html/calcs.html").render(context=context)
+            return contents
 
-        context = {
-            "gene_name": gene,
-            "number_bases": n_bases,
-            "percent": percentage,
-            "lenght": sequence_lenght,
-            "freq_base": most_base
-        }
-        contents = read_template_html_file("./html/calcs.html").render(context=context)
-        return contents
+        else:
+            print("ERROR!!! Cannot connect to the server")
+
 
     except KeyError:
-        print("The gene is not inside our dictionary,. Choose one of the following:", list(DICT_GENES.keys()))
+        contents = read_template_html_file("./html/error_gene.html").render()
+        return contents
+
 
